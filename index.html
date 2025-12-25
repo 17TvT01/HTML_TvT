@@ -5,6 +5,7 @@
   <title>🎄 Giáng Sinh An Lành 🎄</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    /* --- Cấu trúc cơ bản --- */
     body {
       margin: 0;
       min-height: 100vh;
@@ -12,74 +13,204 @@
       font-family: 'Segoe UI', sans-serif;
       color: white;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
     }
 
     header {
       text-align: center;
-      padding: 40px 20px;
+      padding-top: 20px;
+      z-index: 10;
     }
 
     header h1 {
       font-size: 3rem;
-      margin-bottom: 10px;
-      text-shadow: 0 0 10px rgba(255,255,255,0.6);
+      margin: 0 0 10px;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+      animation: glow 2s infinite alternate;
     }
 
     header p {
       font-size: 1.2rem;
       opacity: 0.9;
+      margin: 0;
     }
 
-    .tree {
-      width: 0;
-      height: 0;
-      border-left: 120px solid transparent;
-      border-right: 120px solid transparent;
-      border-bottom: 200px solid #0f8a5f;
-      margin: 60px auto 0;
+    /* --- Hiệu ứng chữ phát sáng --- */
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #fff, 0 0 20px #ff00de, 0 0 30px #ff00de; }
+      to { text-shadow: 0 0 20px #fff, 0 0 30px #ff00de, 0 0 40px #ff00de; }
+    }
+
+    /* --- Cây thông (Cấu trúc mới để gắn đèn) --- */
+    .tree-container {
       position: relative;
+      margin-top: 40px;
+      height: 400px;
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 5;
     }
 
-    .tree::before {
-      content: '';
+    .layer {
       position: absolute;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-color: transparent transparent #0f8a5f transparent;
+    }
+
+    .layer.top {
+      top: 0;
+      border-width: 0 60px 100px 60px;
+      z-index: 3;
+      border-bottom-color: #13a06f;
+    }
+
+    .layer.middle {
       top: 60px;
-      left: -100px;
-      width: 0;
-      height: 0;
-      border-left: 100px solid transparent;
-      border-right: 100px solid transparent;
-      border-bottom: 170px solid #13a06f;
+      border-width: 0 90px 140px 90px;
+      z-index: 2;
+      border-bottom-color: #0f8a5f;
     }
 
-    .tree::after {
-      content: '';
-      position: absolute;
-      top: 110px;
-      left: -80px;
-      width: 0;
-      height: 0;
-      border-left: 80px solid transparent;
-      border-right: 80px solid transparent;
-      border-bottom: 140px solid #19b37d;
-    }
-
-    .star {
-      position: absolute;
-      top: -40px;
-      left: -20px;
-      font-size: 40px;
-      color: gold;
-      text-shadow: 0 0 10px gold;
+    .layer.bottom {
+      top: 130px;
+      border-width: 0 120px 180px 120px;
+      z-index: 1;
+      border-bottom-color: #0b6b4a;
     }
 
     .trunk {
-      width: 40px;
-      height: 60px;
+      position: absolute;
+      top: 310px;
+      width: 50px;
+      height: 70px;
       background: #5c3b1e;
-      margin: 0 auto;
+      border-radius: 0 0 5px 5px;
+      z-index: 0;
     }
 
+    /* --- Ngôi sao --- */
+    .star {
+      position: absolute;
+      top: -35px;
+      font-size: 50px;
+      color: gold;
+      text-shadow: 0 0 20px #ffcc00;
+      z-index: 10;
+      animation: spin 4s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.1); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    /* --- Đèn trang trí --- */
+    .light {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+      animation: blink 1.5s infinite alternate;
+    }
+
+    @keyframes blink {
+      0% { opacity: 0.4; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* --- Quà tặng --- */
+    .gifts-container {
+      position: absolute;
+      top: 350px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      z-index: 6;
+    }
+
+    .gift {
+      width: 40px;
+      height: 40px;
+      background: #d32f2f;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+      transition: transform 0.2s;
+    }
+
+    .gift::before { /* Dải ruy băng dọc */
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 100%;
+      background: gold;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .gift::after { /* Dải ruy băng ngang */
+      content: '';
+      position: absolute;
+      height: 8px;
+      width: 100%;
+      background: gold;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .gift:hover {
+      transform: translateY(-5px);
+    }
+
+    .gift.blue { background: #1976d2; }
+    .gift.green { background: #388e3c; }
+
+    /* --- Tuyết rơi --- */
+    .snow {
+      position: fixed;
+      top: -20px;
+      color: white;
+      user-select: none;
+      pointer-events: none;
+      animation: fall linear infinite;
+      z-index: 100;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(110vh) rotate(360deg); }
+    }
+
+    /* --- Ông già Noel bay --- */
+    .santa-container {
+      position: fixed;
+      top: 100px;
+      left: -200px;
+      font-size: 40px;
+      z-index: 4;
+      animation: flySanta 15s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes flySanta {
+      0% { left: -200px; top: 100px; transform: rotate(5deg); }
+      25% { top: 50px; }
+      50% { top: 120px; }
+      75% { top: 60px; }
+      100% { left: 110%; top: 100px; transform: rotate(-5deg); }
+    }
+
+    /* --- Footer & Controls --- */
     footer {
       position: absolute;
       bottom: 20px;
@@ -87,52 +218,217 @@
       text-align: center;
       font-size: 0.9rem;
       opacity: 0.8;
+      z-index: 10;
     }
 
-    .snow {
+    .controls {
       position: fixed;
-      top: -10px;
-      color: white;
-      user-select: none;
-      animation: fall linear infinite;
+      bottom: 20px;
+      right: 20px;
+      z-index: 20;
     }
 
-    @keyframes fall {
-      to {
-        transform: translateY(110vh);
-      }
+    button {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid white;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 1rem;
+      backdrop-filter: blur(5px);
+      transition: background 0.3s;
     }
+
+    button:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    /* --- Thông báo --- */
+    #message-box {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: white;
+      color: #333;
+      padding: 20px 40px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      z-index: 1000;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    #message-box.show {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    
+    #message-box h2 { color: #d32f2f; margin-top: 0; }
+    #message-box button {
+      background: #0f8a5f;
+      margin-top: 15px;
+    }
+
   </style>
 </head>
 <body>
+
+  <!-- Audio (Nhạc nền) -->
+  <audio id="bg-music" loop>
+    <!-- Sử dụng link nhạc mẫu (Jingle Bells) -->
+    <source src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Jingle_Bells_by_Kevin_MacLeod.ogg" type="audio/ogg">
+    Trình duyệt của bạn không hỗ trợ phát nhạc.
+  </audio>
+
   <header>
     <h1>🎅 Merry Christmas 🎄</h1>
-    <p>Chúc bạn một mùa Giáng Sinh an lành, ấm áp và đầy yêu thương ✨</p>
+    <p>Chúc bạn một mùa Giáng Sinh ấm áp và an lành! ✨</p>
   </header>
 
-  <div class="tree">
-    <div class="star">⭐</div>
-  </div>
-  <div class="trunk"></div>
+  <!-- Container cây thông và quà -->
+  <div class="tree-container">
+    <div class="star" onclick="toggleMusic()">⭐</div>
+    
+    <!-- Các tầng lá -->
+    <div class="layer top" id="layer-top"></div>
+    <div class="layer middle" id="layer-middle"></div>
+    <div class="layer bottom" id="layer-bottom"></div>
+    
+    <!-- Thân cây -->
+    <div class="trunk"></div>
 
+    <!-- Hộp quà -->
+    <div class="gifts-container">
+      <div class="gift" onclick="openGift('Chúc bạn luôn vui vẻ và hạnh phúc! ❤️')"></div>
+      <div class="gift blue" onclick="openGift('Năm mới vạn sự như ý! 💰')"></div>
+      <div class="gift green" onclick="openGift('Sức khỏe dồi dào, bình an! 🍀')"></div>
+    </div>
+  </div>
+
+  <!-- Ông già Noel bay -->
+  <div class="santa-container">🎅🦌💨</div>
+
+  <!-- Footer -->
   <footer>
-    ❄️ Noel đến rồi — hãy mỉm cười nhé ❄️
+    ❄️ Click vào Ngôi Sao để bật nhạc • Click vào Hộp Quà để nhận lời chúc ❄️
   </footer>
 
+  <!-- Nút điều khiển nhạc góc phải -->
+  <div class="controls">
+    <button id="music-btn" onclick="toggleMusic()">🎵 Bật Nhạc</button>
+  </div>
+
+  <!-- Popup lời chúc -->
+  <div id="message-box">
+    <h2>🎁 Điều ước cho bạn</h2>
+    <p id="msg-content">...</p>
+    <button onclick="closeGift()">Cảm ơn!</button>
+  </div>
+
   <script>
+    /* --- Tạo tuyết rơi --- */
     function createSnow() {
       const snow = document.createElement('div');
       snow.classList.add('snow');
-      snow.innerHTML = '❄';
-      snow.style.left = Math.random() * window.innerWidth + 'px';
-      snow.style.fontSize = Math.random() * 10 + 10 + 'px';
-      snow.style.animationDuration = Math.random() * 3 + 2 + 's';
+      snow.innerHTML = Math.random() > 0.5 ? '❄' : '•'; // Đa dạng hình dáng
+      
+      const startLeft = Math.random() * window.innerWidth;
+      snow.style.left = startLeft + 'px';
+      
+      const size = Math.random() * 15 + 5;
+      snow.style.fontSize = size + 'px';
+      snow.style.opacity = Math.random();
+      
+      const duration = Math.random() * 5 + 3;
+      snow.style.animationDuration = duration + 's';
+
       document.body.appendChild(snow);
 
-      setTimeout(() => snow.remove(), 5000);
+      // Xóa tuyết sau khi rơi xong để tránh nặng máy
+      setTimeout(() => snow.remove(), duration * 1000);
+    }
+    setInterval(createSnow, 100);
+
+    /* --- Gắn đèn lên cây --- */
+    function addLights(layerId, count, spreadX, startY) {
+      const layer = document.getElementById(layerId);
+      const colors = ['red', 'yellow', 'cyan', 'magenta', 'orange'];
+      
+      for(let i=0; i<count; i++) {
+        const light = document.createElement('div');
+        light.classList.add('light');
+        
+        // Vị trí ngẫu nhiên tương đối đơn giản trên hình tam giác
+        // Lưu ý: Đây là position absolute so với layer cha (vốn kích thước 0x0 nhưng border to)
+        // Ta dùng trick transform translate để đặt vị trí.
+        
+        // Random vị trí 'ảo' trên tam giác
+        // Layer Top: border-bottom 100px, width total ~120px
+        const y = Math.random() * (startY); 
+        // Càng xuống thấp (y lớn), x càng rộng
+        const xRange = (y / startY) * spreadX; 
+        const x = (Math.random() * xRange * 2) - xRange; // Từ -xRange đến +xRange
+
+        // Chỉnh lại tọa độ vì border css vẽ từ tâm 0,0
+        // border-top là 0. Đỉnh tam giác ở (0,0). Đáy ở (0, chiều_cao).
+        // Tuy nhiên border css lằng nhằng, ta dùng 'top' và 'left' tương đối
+        
+        // Cách đơn giản hơn: đặt thủ công hoặc dùng style
+        light.style.top = (y + 10) + 'px'; // +10 để không bị sát đỉnh quá
+        light.style.left = x - 5 + 'px'; // -5 do width đèn 10px
+        
+        // Màu ngẫu nhiên
+        light.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        light.style.boxShadow = `0 0 5px ${light.style.backgroundColor}`;
+        
+        // Animation delay ngẫu nhiên để không nhấp nháy cùng lúc
+        light.style.animationDelay = Math.random() + 's';
+        
+        layer.appendChild(light);
+      }
     }
 
-    setInterval(createSnow, 200);
+    // Gắn đèn cho từng tầng (ước lượng chiều cao border-bottom)
+    // Top: cao 100, rộng 60 mỗi bên
+    addLights('layer-top', 8, 40, 80);
+    // Middle: cao 140, rộng 90 mỗi bên
+    addLights('layer-middle', 12, 70, 120);
+    // Bottom: cao 180, rộng 120 mỗi bên
+    addLights('layer-bottom', 16, 100, 150);
+
+
+    /* --- Xử lý Nhạc --- */
+    const audio = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-btn');
+    let isPlaying = false;
+
+    function toggleMusic() {
+      if (isPlaying) {
+        audio.pause();
+        musicBtn.textContent = '🎵 Bật Nhạc';
+        musicBtn.style.background = 'rgba(255,255,255,0.2)';
+      } else {
+        audio.play().catch(e => alert("Hãy click vào trang trước để trình duyệt cho phép phát nhạc!"));
+        musicBtn.textContent = '⏸ Tắt Nhạc';
+        musicBtn.style.background = 'rgba(15, 138, 95, 0.8)';
+      }
+      isPlaying = !isPlaying;
+    }
+
+    /* --- Xử lý Quà --- */
+    const msgBox = document.getElementById('message-box');
+    const msgContent = document.getElementById('msg-content');
+
+    function openGift(message) {
+      msgContent.textContent = message;
+      msgBox.classList.add('show');
+    }
+
+    function closeGift() {
+      msgBox.classList.remove('show');
+    }
+
   </script>
 </body>
 </html>
