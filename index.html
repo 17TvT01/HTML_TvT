@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>🎄 Giáng Sinh An Lành 🎄</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      overflow: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px rgba(255,255,255,0.6);
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .tree {
+      width: 0;
+      height: 0;
+      border-left: 120px solid transparent;
+      border-right: 120px solid transparent;
+      border-bottom: 200px solid #0f8a5f;
+      margin: 60px auto 0;
+      position: relative;
+    }
+
+    .tree::before {
+      content: '';
+      position: absolute;
+      top: 60px;
+      left: -100px;
+      width: 0;
+      height: 0;
+      border-left: 100px solid transparent;
+      border-right: 100px solid transparent;
+      border-bottom: 170px solid #13a06f;
+    }
+
+    .tree::after {
+      content: '';
+      position: absolute;
+      top: 110px;
+      left: -80px;
+      width: 0;
+      height: 0;
+      border-left: 80px solid transparent;
+      border-right: 80px solid transparent;
+      border-bottom: 140px solid #19b37d;
+    }
+
+    .star {
+      position: absolute;
+      top: -40px;
+      left: -20px;
+      font-size: 40px;
+      color: gold;
+      text-shadow: 0 0 10px gold;
+    }
+
+    .trunk {
+      width: 40px;
+      height: 60px;
+      background: #5c3b1e;
+      margin: 0 auto;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .snow {
+      position: fixed;
+      top: -10px;
+      color: white;
+      user-select: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎅 Merry Christmas 🎄</h1>
+    <p>Chúc bạn một mùa Giáng Sinh an lành, ấm áp và đầy yêu thương ✨</p>
+  </header>
+
+  <div class="tree">
+    <div class="star">⭐</div>
+  </div>
+  <div class="trunk"></div>
+
+  <footer>
+    ❄️ Noel đến rồi — hãy mỉm cười nhé ❄️
+  </footer>
+
+  <script>
+    function createSnow() {
+      const snow = document.createElement('div');
+      snow.classList.add('snow');
+      snow.innerHTML = '❄';
+      snow.style.left = Math.random() * window.innerWidth + 'px';
+      snow.style.fontSize = Math.random() * 10 + 10 + 'px';
+      snow.style.animationDuration = Math.random() * 3 + 2 + 's';
+      document.body.appendChild(snow);
+
+      setTimeout(() => snow.remove(), 5000);
+    }
+
+    setInterval(createSnow, 200);
+  </script>
+</body>
+</html>
